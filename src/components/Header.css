@@ -20,3 +20,11 @@
   border-bottom: 1px solid lightgray;
   outline: none;
 }
+
+.header > nav a {
+  padding: 10px 15px;
+  margin-right: 5px;
+  border: none;
+  background: #444;
+  color: #fff;
+}

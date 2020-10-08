@@ -51,8 +51,8 @@
   flex: 1;
 }
 .sidebarLeft__items > li > span {
-  background: #444;
-  color: #fff;
+  background: #f1f1f1;
+  color: #444;
   border-radius: 50px;
   height: 25px;
   width: 25px;
@@ -64,8 +64,8 @@
   color: #444;
 }
 .btn {
-  background: #444;
-  color: #fff;
+  background: #f1f1f1;
+  color: #444;
   width: 80%;
   font-size: 18px;
   outline: none;
