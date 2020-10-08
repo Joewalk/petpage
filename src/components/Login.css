@@ -1,0 +1,12 @@
+.login {
+  background: #f8f8f8;
+  display: grid;
+  place-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+.login__container {
+  padding: 100px;
+  background: #fff;
+  border: 1px solid lightgray;
+}

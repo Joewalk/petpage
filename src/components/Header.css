@@ -1,0 +1,22 @@
+.header {
+  border-bottom: 1px solid lightgray;
+  padding: 20px 50px;
+  width: 100%;
+  position: fixed;
+  background: #fff;
+  top: 0;
+  z-index: 2;
+}
+
+.header nav {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+.header > nav input {
+  padding: 5px 20px;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  outline: none;
+}
