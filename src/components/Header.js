@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useStateValue } from "../StateProvider";
 import "./Header.css";
 
 function Header() {
-  const [user, setUser] = useState(null);
+  const [user, dispatch] = useStateValue();
+  const history = useHistory();
+
+  const login = (e) => {
+    history.push("/login");
+  };
+  const signup = (e) => {
+    history.push("/signup");
+  };
+
+  const logout = () => {
+    dispatch({
+      type: "SET_LOGOUT",
+      user: null,
+    });
+  };
   return (
     <div className="header">
       <nav>
         <h4 className="header__logo">PetPage</h4>
-        {user ? (
+
+        {user?.user ? (
           <div className="header__search">
             <input type="text" placeholder="search..." />
           </div>
         ) : (
-          ""
-        )}
-        {!user ? (
           <div>
-            <a href="/login">Login</a>
-            <a href="/signup">Signup</a>
+            <button onClick={login}>Login</button>
+            <button onClick={signup}>Signup</button>
           </div>
-        ) : (
-          <a href="/login">Logout</a>
         )}
+        {user?.user && <button onClick={logout}>Logout</button>}
       </nav>
     </div>
   );

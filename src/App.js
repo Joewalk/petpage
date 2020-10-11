@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./App.css";
 import Header from "./components/Header";
 import SidebarLeft from "./components/SidebarLeft";
@@ -7,14 +7,15 @@ import Post from "./components/Post";
 import Login from "./components/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Signup from "./components/Signup";
+import { useStateValue } from "./StateProvider";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, dispatch] = useStateValue();
 
   return (
     <div className="app">
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route path="/login">
             <Login />
@@ -22,22 +23,24 @@ function App() {
           <Route path="/signup">
             <Signup />
           </Route>
-          <Route path="/">
-            {user ? (
+
+          {user?.user ? (
+            <Route path="/">
               <div className="app__body">
                 <SidebarLeft />
                 <div className="app__posts">
-                  <Post />
-                  <Post />
-                  <Post />
-                  <Post />
+                  <Post user={user} />
+                  <Post user={user} />
+                  <Post user={user} />
+                  <Post user={user} />
+                  <Post user={user} />
                 </div>
                 <SidebarRight />
               </div>
-            ) : (
-              <Login />
-            )}
-          </Route>
+            </Route>
+          ) : (
+            <Login />
+          )}
         </Switch>
       </Router>
     </div>

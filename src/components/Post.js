@@ -6,12 +6,12 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import TextsmsIcon from "@material-ui/icons/Textsms";
 import ShareIcon from "@material-ui/icons/Share";
 
-function Post() {
+function Post({ user }) {
   return (
     <div className="post">
       <div className="post__head">
-        <Avatar alt="Devjoe" src="/static/images/avatar/1.png" />
-        <p>Devjoe</p>
+        <Avatar alt={user?.user} src="/static/images/avatar/1.png" />
+        <p>{user?.user}</p>
         <Button>follow</Button>
       </div>
       <div className="post__body">
