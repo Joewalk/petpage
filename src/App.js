@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import SidebarLeft from "./components/SidebarLeft";
@@ -7,10 +7,42 @@ import Post from "./components/Post";
 import Login from "./components/Login";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Signup from "./components/Signup";
-import { useStateValue } from "./StateProvider";
+import { auth, db } from "./firebase";
+import Account from "./components/Account";
 
 function App() {
-  const [user, dispatch] = useStateValue();
+  const [currentUser, setCurrentUser] = useState();
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const unsub = db
+      .collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) =>
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            post: doc.data(),
+          }))
+        )
+      );
+    return () => {
+      unsub();
+    };
+  }, []);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        console.log("You are not signed in!");
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [currentUser]);
 
   return (
     <div className="app">
@@ -24,16 +56,14 @@ function App() {
             <Signup />
           </Route>
 
-          {user?.user ? (
+          {currentUser ? (
             <Route path="/">
               <div className="app__body">
-                <SidebarLeft />
+                <SidebarLeft currentUser={currentUser} />
                 <div className="app__posts">
-                  <Post user={user} />
-                  <Post user={user} />
-                  <Post user={user} />
-                  <Post user={user} />
-                  <Post user={user} />
+                  {posts.map(({ post, id }) => (
+                    <Post key={id} id={id} post={post} />
+                  ))}
                 </div>
                 <SidebarRight />
               </div>

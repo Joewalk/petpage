@@ -1,11 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useStateValue } from "../StateProvider";
 import "./Header.css";
+import { auth } from "../firebase";
 
 function Header() {
-  const [user, dispatch] = useStateValue();
   const history = useHistory();
+  const currentUser = auth.currentUser;
 
   const login = (e) => {
     history.push("/login");
@@ -15,17 +15,23 @@ function Header() {
   };
 
   const logout = () => {
-    dispatch({
-      type: "SET_LOGOUT",
-      user: null,
-    });
+    auth
+      .signOut()
+      .then(function () {
+        console.log("Sign out complete");
+      })
+      .catch(function (error) {
+        console.log("An error occured when signing out");
+      });
+    history.push("/login");
   };
+
   return (
     <div className="header">
       <nav>
         <h4 className="header__logo">PetPage</h4>
 
-        {user?.user ? (
+        {currentUser ? (
           <div className="header__search">
             <input type="text" placeholder="search..." />
           </div>
@@ -35,7 +41,7 @@ function Header() {
             <button onClick={signup}>Signup</button>
           </div>
         )}
-        {user?.user && <button onClick={logout}>Logout</button>}
+        {currentUser && <button onClick={logout}>Logout</button>}
       </nav>
     </div>
   );

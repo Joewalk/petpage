@@ -6,26 +6,22 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import TextsmsIcon from "@material-ui/icons/Textsms";
 import ShareIcon from "@material-ui/icons/Share";
 
-function Post({ user }) {
+function Post({ post }) {
   return (
     <div className="post">
       <div className="post__head">
-        <Avatar alt={user?.user} src="/static/images/avatar/1.png" />
-        <p>{user?.user}</p>
+        <Avatar alt={post?.username} src="/static/images/avatar/1.png" />
+        <p>{post?.username}</p>
         <Button>follow</Button>
       </div>
       <div className="post__body">
-        <img
-          src="https://cloudspoint.xyz/wp-content/uploads/2020/02/CODE-1.jpg"
-          alt=""
-        />
-        <p>
-          <b>_devjoe: </b>
-          <small>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-            ducimus.
-          </small>
-        </p>
+        <img src={post.imageURL} alt="" />
+        {post.caption && (
+          <p>
+            <b>{post.username}: </b>
+            <small>{post.caption}</small>
+          </p>
+        )}
       </div>
       <div className="post__footer">
         <ul>

@@ -1,31 +1,26 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useStateValue } from "../StateProvider";
+
+import { auth } from "../firebase";
+
 import "./Login.css";
 
 function Login() {
-  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, dispatch] = useStateValue();
-
   const history = useHistory();
 
   const login = (e) => {
     e.preventDefault();
-    // if (username === "" && password === "") {
-    //   alert("please fill all fields");
-    // } else if (username === "") {
-    //   alert("please fill in the username");
-    // } else if (password === "") {
-    //   alert("please enter password");
-    // } else {
-    //   // localStorage.setItem("user", user);
-    // }
-    dispatch({
-      type: "SET_USER",
-      user: "username",
-    });
-    history.push("/");
+    if (email && password !== "") {
+      auth.signInWithEmailAndPassword(email, password).catch((error) => {
+        let errorMessage = error.message;
+        alert(errorMessage);
+      });
+      history.push("/");
+    } else {
+      console.log("Please fill all fields");
+    }
   };
 
   return (
@@ -35,8 +30,8 @@ function Login() {
         <form>
           <div>
             <input
-              value={username}
-              onChange={(e) => setUserName(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type="text"
               placeholder="Enter username"
             />

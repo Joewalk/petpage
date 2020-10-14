@@ -1,13 +1,10 @@
-.app {
-  /* padding-top: 40px; */
-}
 .app__body {
   display: flex;
   justify-content: space-between;
-  width: 70%;
+  max-width: 1200px;
   margin: auto;
   margin-top: 50px;
-  /* position: relative; */
+  position: relative;
 }
 .app__posts {
   padding-top: 50px;
